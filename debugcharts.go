@@ -20,6 +20,7 @@ package debugcharts
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"os"
@@ -172,13 +173,21 @@ func (s *server) gatherData() {
 	}
 }
 
-func init() {
-	http.HandleFunc("/debug/charts/data-feed", s.dataFeedHandler)
-	http.HandleFunc("/debug/charts/data", dataHandler)
-	http.HandleFunc("/debug/charts/", handleAsset("static/index.html"))
-	http.HandleFunc("/debug/charts/main.js", handleAsset("static/main.js"))
-	http.HandleFunc("/debug/charts/jquery-2.1.4.min.js", handleAsset("static/jquery-2.1.4.min.js"))
-	http.HandleFunc("/debug/charts/moment.min.js", handleAsset("static/moment.min.js"))
+func Init(router *gin.Engine) {
+
+	router.GET("/debug/charts/data-feed",gin.WrapF(s.dataFeedHandler))
+	router.GET("/debug/charts/data",gin.WrapF(dataHandler))
+	router.GET("/debug/charts/",gin.WrapF(handleAsset("static/index.html")))
+	router.GET("/debug/charts/main.js",gin.WrapF(handleAsset("static/main.js")))
+	router.GET("/debug/charts/jquery-2.1.4.min.js",gin.WrapF(handleAsset("static/jquery-2.1.4.min.js")))
+	router.GET("/debug/charts/moment.min.js",gin.WrapF(handleAsset("static/moment.min.js")))
+
+	//http.HandleFunc("/debug/charts/data-feed", s.dataFeedHandler)
+	//http.HandleFunc("/debug/charts/data", dataHandler)
+	//http.HandleFunc("/debug/charts/", handleAsset("static/index.html"))
+	//http.HandleFunc("/debug/charts/main.js", handleAsset("static/main.js"))
+	//http.HandleFunc("/debug/charts/jquery-2.1.4.min.js", handleAsset("static/jquery-2.1.4.min.js"))
+	//http.HandleFunc("/debug/charts/moment.min.js", handleAsset("static/moment.min.js"))
 
 	myProcess, _ = process.NewProcess(int32(os.Getpid()))
 
