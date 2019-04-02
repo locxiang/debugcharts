@@ -173,8 +173,15 @@ func (s *server) gatherData() {
 	}
 }
 
-func Init(router *gin.Engine) {
+/**
+启动 debugcharts
 
+debugcharts.Init(engine,true)
+ */
+func Init(router *gin.Engine,start bool) {
+	if start == false {
+		return
+	}
 	router.GET("/debug/charts/data-feed",gin.WrapF(s.dataFeedHandler))
 	router.GET("/debug/charts/data",gin.WrapF(dataHandler))
 	router.GET("/debug/charts/",gin.WrapF(handleAsset("static/index.html")))
