@@ -283,7 +283,7 @@ func (s *server) dataFeedHandler(w http.ResponseWriter, r *http.Request) {
 	var i uint
 
 	for u := range c.c {
-		websocket.WriteJSON(conn, u)
+		conn.WriteJSON(u)
 		i++
 
 		if i%10 == 0 {
