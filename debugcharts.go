@@ -15,7 +15,7 @@
 //
 //	http://localhost:6060/debug/charts
 //
-package debugcharts
+package gindebugcharts
 
 import (
 	"encoding/json"
@@ -30,7 +30,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/locxiang/debugcharts/bindata"
+	"github.com/locxiang/gindebugcharts/bindata"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/process"
 )
@@ -177,14 +177,14 @@ func (s *server) gatherData() {
 注册 debugcharts
 
 debugcharts.Wrapper(engine)
- */
+*/
 func Wrapper(router *gin.Engine) {
-	router.GET("/debug/charts/data-feed",gin.WrapF(s.dataFeedHandler))
-	router.GET("/debug/charts/data",gin.WrapF(dataHandler))
-	router.GET("/debug/charts/",gin.WrapF(handleAsset("static/index.html")))
-	router.GET("/debug/charts/main.js",gin.WrapF(handleAsset("static/main.js")))
-	router.GET("/debug/charts/jquery-2.1.4.min.js",gin.WrapF(handleAsset("static/jquery-2.1.4.min.js")))
-	router.GET("/debug/charts/moment.min.js",gin.WrapF(handleAsset("static/moment.min.js")))
+	router.GET("/debug/charts/data-feed", gin.WrapF(s.dataFeedHandler))
+	router.GET("/debug/charts/data", gin.WrapF(dataHandler))
+	router.GET("/debug/charts/", gin.WrapF(handleAsset("static/index.html")))
+	router.GET("/debug/charts/main.js", gin.WrapF(handleAsset("static/main.js")))
+	router.GET("/debug/charts/jquery-2.1.4.min.js", gin.WrapF(handleAsset("static/jquery-2.1.4.min.js")))
+	router.GET("/debug/charts/moment.min.js", gin.WrapF(handleAsset("static/moment.min.js")))
 
 	//http.HandleFunc("/debug/charts/data-feed", s.dataFeedHandler)
 	//http.HandleFunc("/debug/charts/data", dataHandler)

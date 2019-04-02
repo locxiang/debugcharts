@@ -7,9 +7,8 @@ import (
 	"runtime"
 	"time"
 
-	_ "net/http/pprof"
-
-	"github.com/locxiang/debugcharts"
+	"github.com/DeanThompson/ginpprof"
+	"github.com/locxiang/gindebugcharts"
 )
 
 func dummyCPUUsage() {
@@ -39,7 +38,8 @@ func dummyAllocations() {
 func main() {
 
 	engine := gin.Default()
-	debugcharts.Wrapper(engine)
+	gindebugcharts.Wrapper(engine)
+	ginpprof.Wrapper(engine)
 
 	go dummyAllocations()
 	go dummyCPUUsage()
