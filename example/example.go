@@ -2,15 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"log"
-	"net/http"
 	"runtime"
 	"time"
 
 	_ "net/http/pprof"
 
-	"github.com/gorilla/handlers"
-	_ "github.com/mkevac/debugcharts"
+	"github.com/locxiang/debugcharts"
 )
 
 func dummyCPUUsage() {
@@ -38,10 +37,17 @@ func dummyAllocations() {
 }
 
 func main() {
+
+	engine := gin.Default()
+	debugcharts.Wrapper(engine)
+
 	go dummyAllocations()
 	go dummyCPUUsage()
 	go func() {
-		log.Fatal(http.ListenAndServe(":8080", handlers.CompressHandler(http.DefaultServeMux)))
+		err := engine.Run(":8080")
+		if err != nil {
+			log.Panic(err)
+		}
 	}()
 	log.Printf("you can now open http://localhost:8080/debug/charts/ in your browser")
 	select {}
