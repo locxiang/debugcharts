@@ -174,14 +174,11 @@ func (s *server) gatherData() {
 }
 
 /**
-启动 debugcharts
+注册 debugcharts
 
-debugcharts.Init(engine,true)
+debugcharts.Wrapper(engine)
  */
-func Init(router *gin.Engine,start bool) {
-	if start == false {
-		return
-	}
+func Wrapper(router *gin.Engine) {
 	router.GET("/debug/charts/data-feed",gin.WrapF(s.dataFeedHandler))
 	router.GET("/debug/charts/data",gin.WrapF(dataHandler))
 	router.GET("/debug/charts/",gin.WrapF(handleAsset("static/index.html")))
